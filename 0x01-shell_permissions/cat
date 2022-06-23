@@ -1,0 +1,2 @@
+#!/bin/bash 5-execute
+chmod u+x hello\n 5-execute
