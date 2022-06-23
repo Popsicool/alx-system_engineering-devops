@@ -1,0 +1,3 @@
+#!/bin/bash
+nchmod o+x, g+x, o+r hello
+
