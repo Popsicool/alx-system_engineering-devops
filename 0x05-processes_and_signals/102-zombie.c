@@ -2,7 +2,7 @@
 #include <stdlib.h>
 #include <unistd.h>
 
-int repeat();
+int repeat(void);
 
 
 /**
@@ -33,7 +33,7 @@ int main(void)
 * Return: 0
 */
 
-int repeat()
+int repeat(void)
 {
 	while (1)
 	{
