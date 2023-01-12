@@ -1,24 +1,28 @@
 # Install Nginx web server (w/ Puppet)
 
-package { 'nginx':
-  ensure   => '1.18.0',
-  provider => 'apt',
+package {'nginx':
+  ensure => 'present'
 }
 
-file { 'Hello World':
-  path    => '/var/www/html/index.nginx-debian.html',
-  content => 'Hello World',
+exec {'install':
+  command  => 'sudo apt-get update ; sudo apt-get -y install nginx',
+  provider => shell
+
 }
 
-file_line { 'Hello World':
-  path  => '/etc/nginx/sites-available/default',
-  after => 'server_name _;',
-  line  => '\trewrite ^/redirect_me https://www.github.com/Popsicool permanent;',
+exec {'Hello':
+  command  => 'echo "Hello World!" | sudo tee /var/www/html/index.html',
+  provider => shell,
 }
 
-exec { 'service':
-  command  => 'service nginx start',
-  provider => 'shell',
-  user     => 'root',
-  path     => '/usr/sbin/service',
+exec {'sudo sed -i "s/listen 80 default_server;/listen 80 \
+  default_server;\\n\\tlocation \/redirect_me {\\n\\t\\treturn 301 https:\/\/www.github.com/Popsicool\/;\\n\\t}/" \
+  /etc/nginx/sites-available/default':
+  provider => shell,
 }
+
+exec {'run':
+  command  => 'sudo service nginx restart',
+  provider => shell
+}
+
