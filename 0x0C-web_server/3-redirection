@@ -1,0 +1,11 @@
+#!/usr/bin/env bash
+#  Redirection
+
+apt-get update
+apt-get -y install nginx
+service nginx start
+echo "Hello World!" | /var/www/html/index.html
+new_string="server_name _;\n\trewrite ^\/redirect_me ^\/redirect_me https:\/\/www.github.com/Popsicool permanent;"
+sed -i "s/server_name _;/$new_string/" /etc/nginx/sites-enabled/default
+
+service nginx restart
