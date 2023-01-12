@@ -1,7 +1,7 @@
 #!/usr/bin/env bash
 #  Not found page 404
 
-apt-get update
+apt-get update -y
 apt-get -y install nginx
 
 sudo service nginx start
