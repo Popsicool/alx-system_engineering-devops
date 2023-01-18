@@ -1,0 +1,37 @@
+#!/usr/bin/env bash
+# In this first task you need to configure web-02 to be
+# identical to web-01. Fortunately, you built a Bash script
+# during your web server project, and they’ll now come in handy to easily
+# configure web-02. Remember, always try to automate your work!
+
+
+# update and install nginx
+sudo apt-get update
+sudo apt-get -y install nginx
+
+# allow firewall
+sudo ufw allow 'Nginx HTTP'
+
+# create html directory
+sudo mkdir -p /var/www/html
+
+# allow permission
+sudo chmod -R 755 /var/www
+
+#  create index.html and write to it
+echo 'Hello World!' |sudo tee  /var/www/html/index.html
+
+# create errro 404 page
+echo "Ceci n'est pas une page" |sudo tee /var/www/html/404.html
+
+# add customer header and redirect
+new_string="server_name _;\n\tadd_header X-Served-By \$hostname;\n\trewrite ^\/redirect_me https:\/\/www.github.com/Popsicool permanent;"
+sudo sed -i "s/server_name _;/$new_string/" /etc/nginx/sites-enabled/default
+
+# error 404 page
+new_string="listen 80 default_server;\n\terror_page 404 \/404.html;\n\tlocation = \/404.html {\n\t\troot \/var\/www\/html;\n\t\tinternal;\n\t}"
+sudo sed -i "s/listen 80 default_server;/$new_string/" /etc/nginx/sites-enabled/default
+
+# restart ngx
+sudo service nginx restart
+
