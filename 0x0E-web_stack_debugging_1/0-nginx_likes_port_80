@@ -1,0 +1,10 @@
+#!/usr/bin/env bash
+# debugging why nginx wasnt listening on port 8
+# after serious checkong on stackoverflow,
+# i had to delete the site-enabled/default and
+# replace with site-available/default by using
+# symbolic link then restart nginx
+
+sudo ln -sf /etc/nginx/sites-available/default /etc/nginx/sites-enabled/default
+sudo service nginx restart
+
