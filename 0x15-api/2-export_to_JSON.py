@@ -5,8 +5,8 @@ Python script that, using a REST API, for a given employee ID,
 returns information about his/her TODO list progress.
 '''
 
-import requests
 import json
+import requests
 import sys
 
 
@@ -16,7 +16,7 @@ def call():
     url = "https://jsonplaceholder.typicode.com/users" + "/" + Id
 
     response = requests.get(url)
-    Name = response.json().get('name')
+    Name = response.json().get('username')
 
     todo = url + "/todos"
     tasks = requests.get(todo).json()

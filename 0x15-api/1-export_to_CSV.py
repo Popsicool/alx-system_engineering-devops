@@ -15,7 +15,7 @@ def call():
     url = "https://jsonplaceholder.typicode.com/users" + "/" + Id
 
     response = requests.get(url)
-    Name = response.json().get('name')
+    Name = response.json().get('username')
 
     todo = url + "/todos"
     tasks = requests.get(todo).json()
